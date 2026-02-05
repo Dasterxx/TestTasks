@@ -15,9 +15,13 @@ public final class PuzzleState {
         this.capacity = capacity;
     }
 
+    // Замените на:
     public static PuzzleState create(List<List<Color>> initialConfiguration, int capacity) {
         List<Tube> tubes = initialConfiguration.stream()
-                .map(contents -> Tube.of(contents, capacity))
+                .map(contents -> {
+                    System.out.println("Creating tube with " + contents.size() + " colors, capacity=" + capacity);
+                    return Tube.of(contents, capacity);
+                })
                 .collect(Collectors.toList());
         return new PuzzleState(tubes, capacity);
     }

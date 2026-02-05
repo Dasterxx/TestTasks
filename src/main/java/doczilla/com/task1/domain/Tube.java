@@ -20,24 +20,15 @@ public final class Tube {
     }
 
     public static Tube of(List<Color> contents, int capacity) {
-        if (contents.size() > capacity) {
+        if (capacity <= 0) {
+            throw new IllegalArgumentException("Capacity must be positive");
+        }
+        // Создаём копию, чтобы избежать мутаций
+        List<Color> copy = new ArrayList<>(contents);
+        if (copy.size() > capacity) {
             throw new IllegalArgumentException("Contents exceed capacity");
         }
-        return new Tube(contents, capacity);
-    }
-
-
-
-
-
-    public static Tube fromArray(Color[] array, int capacity) {
-        List<Color> list = new ArrayList<>();
-        for (Color c : array) {
-            if (c != null && !c.isEmpty()) {
-                list.add(c);
-            }
-        }
-        return new Tube(list, capacity);
+        return new Tube(copy, capacity);
     }
 
     public boolean isEmpty() {

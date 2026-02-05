@@ -2,11 +2,9 @@ package doczilla.com.task1.vizualizer;
 
 import doczilla.com.task1.domain.Color;
 import doczilla.com.task1.domain.PuzzleState;
-import doczilla.com.task1.domain.Solution;
 import doczilla.com.task1.domain.Tube;
 
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.function.Function;
@@ -18,10 +16,6 @@ public class PuzzleVisualizer {
     private final Function<Color, String> colorFormatter;
     private final PrintStream out;
 
-
-
-    // Factory method for default formatter (ASCII safe)
-    // PuzzleVisualizer — исправлен порядок цветов (1-12)
     private static Function<Color, String> createDefaultFormatter() {
         return color -> {
             if (color.isEmpty()) return "[ ]";
@@ -44,11 +38,7 @@ public class PuzzleVisualizer {
     }
 
     private static PrintStream createUTF8PrintStream() {
-        try {
-            return new PrintStream(System.out, true, StandardCharsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e) {
-            return System.out;
-        }
+        return new PrintStream(System.out, true, StandardCharsets.UTF_8);
     }
 
     public String visualize(PuzzleState state) {
@@ -80,34 +70,8 @@ public class PuzzleVisualizer {
         out.print(visualize(state));
     }
 
-    public void printSolution(Solution solution, PuzzleState initialState) {
-        out.println("TIME TO SOLVE IN MINUTES :" + solution.moves().size() + " STEPS");
-        out.println("SEARCHED STEPS: " + solution.stepsExplored());
-        out.println("\nSUBSEQUENCE STEPS:");
-
-        for (int i = 0; i < solution.moves().size(); i++) {
-            out.print(solution.moves().get(i));
-            if ((i + 1) % 8 == 0) out.println();
-            else out.print(" ");
-        }
-        out.println("\n");
-    }
-
-    public void printSuccess() {
-        out.println("[OK] Решение верифицировано успешно!");
-    }
-
-    public void printFailure() {
-        out.println("[FAIL] Конечное состояние не является решением");
-    }
-
-
     public PuzzleVisualizer() {
         this(createDefaultFormatter(), createUTF8PrintStream());
-    }
-
-    public PuzzleVisualizer(Function<Color, String> colorFormatter) {
-        this(colorFormatter, createUTF8PrintStream());
     }
 
     public PuzzleVisualizer(Function<Color, String> colorFormatter, PrintStream out) {

@@ -1,8 +1,7 @@
 package doczilla.com.task1;
 
-import doczilla.com.task1.colortasks.AlmostFullColors;
 import doczilla.com.task1.domain.*;
-import doczilla.com.task1.strategy.IDAStarStrategy;
+import doczilla.com.task1.strategy.FastSolverStrategy;
 import doczilla.com.task1.strategy.QuickSolverStrategy;
 import doczilla.com.task1.util.ValidConf;
 import doczilla.com.task1.vizualizer.PuzzleVisualizer;
@@ -10,28 +9,17 @@ import doczilla.com.task1.vizualizer.PuzzleVisualizer;
 import java.util.List;
 import java.util.Optional;
 
-import static doczilla.com.task1.colortasks.AlmostFullColors.createSimpleConfiguration;
-import static doczilla.com.task1.colortasks.HardConfiguration.createHardConfiguration;
-
 public class WaterSortApplication {
     private static final ValidConf validConfig = new ValidConf();
-    private static final AlmostFullColors almostFullColors = new AlmostFullColors();
 
     public static void main(String[] args) {
         int capacity = 4;
+        int colors = 12;
+        int emptyTubes = 2;
 
         //  ВАЛИДНАЯ конфигурация
-//        List<List<Color>> config = validConfig.generateValidConfiguration(colors, emptyTubes, capacity);
-//        PuzzleState initialState = PuzzleState.create(config, capacity);
-
-        // тестовая конфигурация для проверки:
-//        List<List<Color>> config = createSimpleConfiguration();
-//        PuzzleState initialState = PuzzleState.create(config, capacity);
-
-        //hard config
-        // очень долго решается
-        List<List<Color>> hardConfig = createHardConfiguration();
-        PuzzleState initialState = PuzzleState.create(hardConfig, capacity);
+        List<List<Color>> config = validConfig.trap();
+        PuzzleState initialState = PuzzleState.create(config, capacity);
 
         if (initialState.isSolved()) {
             System.out.println("ALREADY SOLVED");
@@ -52,8 +40,9 @@ public class WaterSortApplication {
         // Если не сработал — IDA*
         if (solution.isEmpty()) {
             System.out.println("QuickSolver failed, trying IDA*...");
-            solution = new IDAStarStrategy(100).solve(initialState);
+            solution = new FastSolverStrategy().solve(initialState);
         }
+
 
         long time = System.currentTimeMillis() - start;
 

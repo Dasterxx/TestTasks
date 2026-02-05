@@ -9,6 +9,7 @@ import doczilla.com.task1.strategy.SolvingStrategy;
 import java.util.Objects;
 import java.util.Optional;
 
+@Deprecated
 public class PuzzleSolver {
     private final SolvingStrategy strategy;
 

@@ -1,7 +1,6 @@
 package doczilla.com.task1.vizualizer;
 
 import doczilla.com.task1.domain.Color;
-import doczilla.com.task1.domain.Move;
 import doczilla.com.task1.domain.PuzzleState;
 import doczilla.com.task1.domain.Solution;
 import doczilla.com.task1.domain.Tube;
@@ -10,7 +9,6 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 
 /**
@@ -23,43 +21,25 @@ public class PuzzleVisualizer {
 
 
     // Factory method for default formatter (ASCII safe)
+    // PuzzleVisualizer — исправлен порядок цветов (1-12)
     private static Function<Color, String> createDefaultFormatter() {
         return color -> {
             if (color.isEmpty()) return "[ ]";
             return switch (color.value()) {
-                case 1 -> "[R]";
+                case 1 -> "[A]";
                 case 2 -> "[B]";
-                case 3 -> "[G]";
-                case 4 -> "[Y]";
-                case 5 -> "[P]";
-                case 6 -> "[O]";
-                case 7 -> "[W]";
-                case 8 -> "[N]";
-                case 9 -> "[C]";
-                case 10 -> "[M]";
-                case 11 -> "[L]";
-                case 12 -> "[K]";
+                case 3 -> "[C]";
+                case 4 -> "[D]";
+                case 5 -> "[E]";
+                case 6 -> "[F]";
+                case 7 -> "[G]";
+                case 8 -> "[H]";
+                case 9 -> "[I]";
+                case 10 -> "[J]";
+                case 11 -> "[K]";
+                case 12 -> "[L]";
                 default -> String.format("[%d]", color.value());
             };
-        };
-    }
-
-    public static Function<Color, String> createEmojiFormatter() {
-        return color -> switch (color.value()) {
-            case -1 -> " · ";
-            case 0 -> "🔴";
-            case 1 -> "🔵";
-            case 2 -> "🟢";
-            case 3 -> "🟡";
-            case 4 -> "🟣";
-            case 5 -> "🟠";
-            case 6 -> "⚪";
-            case 7 -> "🟤";
-            case 8 -> "🔷";
-            case 9 -> "💚";
-            case 10 -> "💛";
-            case 11 -> "💜";
-            default -> String.format("%2d ", color.value());
         };
     }
 
@@ -69,16 +49,6 @@ public class PuzzleVisualizer {
         } catch (UnsupportedEncodingException e) {
             return System.out;
         }
-    }
-
-    // Builder-style method to create new instance with emoji formatter
-    public PuzzleVisualizer withEmojiFormatter() {
-        return new PuzzleVisualizer(createEmojiFormatter(), out);
-    }
-
-    // Builder-style method to create new instance with custom formatter
-    public PuzzleVisualizer withFormatter(Function<Color, String> formatter) {
-        return new PuzzleVisualizer(formatter, out);
     }
 
     public String visualize(PuzzleState state) {
@@ -121,28 +91,6 @@ public class PuzzleVisualizer {
             else out.print(" ");
         }
         out.println("\n");
-    }
-
-    public void animateSolution(Solution solution, PuzzleState initialState) {
-        PuzzleState current = initialState;
-        out.println("START STATUS:");
-        printState(current);
-
-        for (int i = 0; i < solution.moves().size(); i++) {
-            Move move = solution.moves().get(i);
-            Optional<PuzzleState> next = current.apply(move);
-
-            if (next.isEmpty()) {
-                out.println("MOVEMENT FAILED: " + move);
-                return;
-            }
-
-            current = next.get();
-            out.println("Ход " + (i + 1) + ": " + move);
-            printState(current);
-        }
-
-        out.println(current.isSolved() ? "✓ DONE!" : "✗ FAIL");
     }
 
     public void printSuccess() {

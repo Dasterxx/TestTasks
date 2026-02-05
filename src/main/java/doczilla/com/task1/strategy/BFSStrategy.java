@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 
+@Deprecated
 public class BFSStrategy implements SolvingStrategy {
     private final int maxIterations;
 

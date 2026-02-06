@@ -6,25 +6,20 @@ import doczilla.com.task2.fileexchange.domain.model.UserId;
 
 import java.util.Optional;
 
-/**
- * Извлекает аутентификацию из HTTP заголовков.
- */
 public class AuthExtractor {
 
     private static final String AUTH_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
 
     public Optional<UserId> extract(HttpExchange exchange) {
-        String header = exchange.getRequestHeaders().getFirst(AUTH_HEADER);
-        if (header == null || !header.startsWith(BEARER_PREFIX)) {
+        String header = exchange.getRequestHeaders().getFirst("Authorization");
+        if (header == null || !header.startsWith("Bearer ")) {
             return Optional.empty();
         }
 
-        String tokenValue = header.substring(BEARER_PREFIX.length());
-        AccessToken token = AccessToken.of(tokenValue);
+        String tokenValue = header.substring(7).trim();
 
-        // Здесь должен быть вызов к UserAuthPort, но для простоты
-        // парсим UUID напрямую (в реальности - валидация токена)
+        // Если токен просто UUID (как в нашей заглушке), парсим как UUID
         try {
             return Optional.of(UserId.of(tokenValue));
         } catch (IllegalArgumentException e) {

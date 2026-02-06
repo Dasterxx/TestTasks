@@ -22,20 +22,37 @@ public final class DownloadFileService implements DownloadFileUseCase {
         this.storagePort = Objects.requireNonNull(storagePort);
     }
 
+    // application/service/DownloadFileService.java
+
     @Override
     public Optional<FileResult> download(FileId fileId, UserId requestedBy) {
+        System.out.println("=== DEBUG ===");
+        System.out.println("fileId: " + fileId);
+        System.out.println("requestedBy: " + requestedBy);
+
         File file = indexPort.findById(fileId)
                 .orElseThrow(() -> new FileNotFoundEx(fileId));
 
+        System.out.println("Found file: " + file.getId());
+        System.out.println("file.ownerId: " + file.getOwnerId());
+        System.out.println("file.isAccessibleBy(requestedBy): " + file.isAccessibleBy(requestedBy));
+
         if (!file.isAccessibleBy(requestedBy)) {
+            System.out.println("ACCESS DENIED!");
             throw new UnauthorizedAccessException(fileId);
         }
 
+        System.out.println("Access granted, recording download...");
         file.recordDownload();
+        System.out.println("Download recorded, updating index...");
         indexPort.update(file);
+        System.out.println("Index updated, retrieving content...");
 
         byte[] content = storagePort.retrieve(fileId.value())
                 .orElseThrow(() -> new FileNotFoundEx(fileId));
+
+        System.out.println("Content retrieved, returning result");
+        System.out.println("=== END DEBUG ===");
 
         return Optional.of(new FileResult(
                 file.getName().value(),

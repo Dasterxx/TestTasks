@@ -59,8 +59,9 @@ public final class File {
 
     public boolean isAccessibleBy(UserId user) {
         if (deleted) return false;
-        if (ownerId == null) return true; // Публичный файл
-        return ownerId.equals(user);
+        if (ownerId == null) return true; // Публичный файл - доступен всем
+        if (user == null) return false;   // Приватный файл, но пользователь не авторизован
+        return ownerId.equals(user);      // Приватный файл, проверяем владельца
     }
 
     public boolean isExpired(int daysThreshold) {

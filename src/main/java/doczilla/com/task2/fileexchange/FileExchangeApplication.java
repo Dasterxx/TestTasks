@@ -7,7 +7,7 @@ public class FileExchangeApplication {
 
     public static void main(String[] args) throws Exception {
         ApplicationConfig config = new ApplicationConfig();
-        HttpServer server = config.createServer(8080);
+        HttpServer server = config.compose().server();
 
         server.start();
         System.out.println("File Exchange Service running on port 8080");

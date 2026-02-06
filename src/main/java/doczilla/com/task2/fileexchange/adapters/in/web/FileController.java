@@ -48,13 +48,18 @@ public class FileController implements HttpHandler {
     }
 
     private void handleUpload(HttpExchange exchange) throws IOException {
-        // Извлекаем пользователя (может быть null)
         UserId user = authExtractor.extract(exchange).orElse(null);
 
-        // Парсим multipart
-        ParsedFile parsed = multipartParser.parse(exchange.getRequestBody());
+        // Получаем Content-Type с boundary
+        String contentType = exchange.getRequestHeaders()
+                .getFirst("Content-Type");
 
-        // Формируем команду
+        // Передаем в парсер
+        ParsedFile parsed = multipartParser.parse(
+                exchange.getRequestBody(),
+                contentType
+        );
+
         UploadFileUseCase.UploadFileCommand command =
                 new UploadFileUseCase.UploadFileCommand(
                         parsed.fileName(),
@@ -64,10 +69,8 @@ public class FileController implements HttpHandler {
                         user
                 );
 
-        // Вызываем use case
         FileId fileId = uploadUseCase.upload(command);
 
-        // Формируем ответ
         String json = String.format(
                 "{\"downloadUrl\":\"/download/%s\",\"expiresInDays\":30}",
                 fileId.value()

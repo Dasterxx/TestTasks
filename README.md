@@ -20,14 +20,14 @@ Java-приложение для решения головоломки "Сорт
 *Конфигурация ставится в main классе там все 3 вызова 1 из которых не закоментирован 
 default - new SolverService().solve(initialState);
 
-Выбор стратегий через `SolverConfig`:
+Выбор стратегий через `SolverConfig` - `SolverServiceFactory`:
 
 ```java
 // Оба алгоритма (по умолчанию)
-new SolverService().solve(initialState);
+Optional<Solution> solution = SolverServiceFactory.defaultService().solve(initialState);
 
 // Только A*
-new SolverService(SolverConfig.fastOnly()).solve(initialState);
+Optional<Solution> solution = SolverServiceFactory.fastOnly().solve(initialState);
 
 // Только QuickSolver
-new SolverService(SolverConfig.quickOnly()).solve(initialState);
+Optional<Solution> solution = SolverServiceFactory.quickOnly().solve(initialState);

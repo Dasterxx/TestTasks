@@ -1,16 +1,22 @@
 package doczilla.com.task2.fileexchange;
 
-import com.sun.net.httpserver.HttpServer;
 import doczilla.com.task2.fileexchange.adapters.config.ApplicationConfig;
+import doczilla.com.task2.fileexchange.adapters.in.web.StaticFileServer;
 
 public class FileExchangeApplication {
 
     public static void main(String[] args) throws Exception {
+        // Backend
         ApplicationConfig config = new ApplicationConfig();
-        HttpServer server = config.compose().server();
+        var app = config.compose();
+        app.start();
 
-        server.start();
-        System.out.println("File Exchange Service running on port 8080");
-        System.out.println("Using Virtual Threads: enabled");
+        // Frontend (опционально)
+        new StaticFileServer("frontend", 3000).start();
+
+        System.out.println("\n=================================");
+        System.out.println("Backend: http://localhost:8080");
+        System.out.println("Frontend: http://localhost:3000");
+        System.out.println("=================================");
     }
 }

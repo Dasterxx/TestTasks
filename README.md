@@ -18,7 +18,7 @@ Java-приложение для решения головоломки "Сорт
 
 ## Конфигурация
 *Конфигурация ставится в main классе там все 3 вызова 1 из которых не закоментирован 
-default - new SolverService().solve(initialState);
+default - SolverServiceFactory.defaultService().solve(initialState);
 
 Выбор стратегий через `SolverConfig` - `SolverServiceFactory`:
 

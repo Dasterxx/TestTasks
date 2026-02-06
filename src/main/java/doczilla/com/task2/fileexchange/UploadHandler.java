@@ -1,5 +1,4 @@
 package doczilla.com.task2.fileexchange;
 
-public class FileService {
-
+class UploadHandler  {
 }

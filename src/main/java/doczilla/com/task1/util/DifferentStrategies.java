@@ -6,7 +6,6 @@ import java.util.List;
 
 public class DifferentStrategies {
 
-    // Легкая - решается за 15-25 ходов
     public  List<List<Color>> easy() {
         return List.of(
                 List.of(c(1), c(1), c(1), c(2)),
@@ -26,7 +25,6 @@ public class DifferentStrategies {
         );
     }
 
-    // Средняя - решается за 40-60 ходов
     public  List<List<Color>> medium() {
         return List.of(
                 List.of(c(1), c(2), c(3), c(4)),
@@ -46,7 +44,6 @@ public class DifferentStrategies {
         );
     }
 
-    // Сложная - решается за 80-120 ходов
     public  List<List<Color>> hard() {
         return List.of(
                 List.of(c(12), c(11), c(10), c(9)),
@@ -66,7 +63,6 @@ public class DifferentStrategies {
         );
     }
 
-    // Очень сложная - решается за 150+ ходов или не решается быстро
     public  List<List<Color>> veryHard() {
         return List.of(
                 List.of(c(1), c(2), c(3), c(4)),
@@ -86,7 +82,6 @@ public class DifferentStrategies {
         );
     }
 
-    // Реально сложная — хаотичное перемешивание
     public List<List<Color>> extreme() {
         return List.of(
                 List.of(c(12), c(5), c(9), c(3)),
@@ -106,7 +101,6 @@ public class DifferentStrategies {
         );
     }
 
-    // Почти решаемая, но с ловушками
     public List<List<Color>> trap() {
         return List.of(
                 // Почти готовые, но мешают друг другу

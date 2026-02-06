@@ -9,9 +9,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.function.Function;
 
-/**
- * Presentation Layer - State visualization with encoding handling
- */
 public class PuzzleVisualizer {
     private final Function<Color, String> colorFormatter;
     private final PrintStream out;

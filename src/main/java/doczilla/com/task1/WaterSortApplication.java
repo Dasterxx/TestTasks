@@ -2,7 +2,6 @@ package doczilla.com.task1;
 
 import doczilla.com.task1.domain.*;
 import doczilla.com.task1.service.ResultPrinter;
-import doczilla.com.task1.service.SolverConfig;
 import doczilla.com.task1.service.SolverService;
 import doczilla.com.task1.service.SolverServiceFactory;
 import doczilla.com.task1.util.DifferentStrategies;
@@ -33,7 +32,7 @@ public class WaterSortApplication {
 
         // Выбор конфигурации:
          Optional<Solution> solution = SolverServiceFactory.defaultService().solve(initialState); // Оба
-        //Optional<Solution> solution = SolverServiceFactory.fastOnly().solve(initialState) // Только A*
+        //Optional<Solution> solution = SolverServiceFactory.fastOnly().solve(initialState); // Только A*
         //Optional<Solution> solution = SolverServiceFactory.quickOnly().solve(initialState); // Только Quick
 
         long time = System.currentTimeMillis() - start;

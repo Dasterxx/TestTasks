@@ -1,8 +1,5 @@
 package doczilla.com.task1.domain;
 
-/**
- * Value object representing a move
- */
 public record Move(int fromTube, int toTube) {
     public Move {
         if (fromTube < 0 || toTube < 0) {

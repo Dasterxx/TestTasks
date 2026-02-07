@@ -22,12 +22,29 @@ default - SolverServiceFactory.defaultService().solve(initialState);
 
 Выбор стратегий через `SolverConfig` - `SolverServiceFactory`:
 
-```java
-// Оба алгоритма (по умолчанию)
+
+ Оба алгоритма (по умолчанию)
 Optional<Solution> solution = SolverServiceFactory.defaultService().solve(initialState);
 
-// Только A*
+ Только A*
 Optional<Solution> solution = SolverServiceFactory.fastOnly().solve(initialState);
 
-// Только QuickSolver
+ Только QuickSolver
 Optional<Solution> solution = SolverServiceFactory.quickOnly().solve(initialState);
+
+TASK 2 
+
+## Стек технологий
+
+- **Java 21** (Virtual Threads, Records, Pattern Matching)
+- **Встроенный HTTP Server** (`com.sun.net.httpserver`) - без Spring
+- **Чистая архитектура** - никаких фреймворков в domain/application
+
+## Быстрый старт
+
+### Требования
+
+- JDK 21+
+- Maven или Gradle (или компиляция вручную)
+
+# Запуск через bat скрипты - task2.bat

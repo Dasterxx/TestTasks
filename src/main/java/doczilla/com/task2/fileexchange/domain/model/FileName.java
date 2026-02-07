@@ -3,6 +3,7 @@ package doczilla.com.task2.fileexchange.domain.model;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public final class FileName implements Serializable {
@@ -14,18 +15,38 @@ public final class FileName implements Serializable {
     private final String value;
     private final String extension;
 
+    // Заблокированные расширения
+    private static final Set<String> BLOCKED_EXTENSIONS = Set.of(
+            "exe", "dll", "bat", "cmd", "sh", "bash", "zsh",
+            "php", "jsp", "asp", "aspx",
+            "py", "pyc", "pyo", "rb", "pl", "cgi",
+            "jar", "class", "war", "ear",
+            "msi", "dmg", "pkg", "deb", "rpm",
+            "com", "scr", "vbs", "js", "wsf", "hta",
+            "ps1", "psm1", "psd1"
+    );
+
     private FileName(String value) {
         if (value == null || value.isBlank()) {
             throw new IllegalArgumentException("Filename cannot be empty");
         }
         if (value.length() > MAX_LENGTH) {
-            throw new IllegalArgumentException("Filename too long");
+            throw new IllegalArgumentException("Filename too long (max " + MAX_LENGTH + " chars)");
         }
         if (INVALID_CHARS.matcher(value).find()) {
             throw new IllegalArgumentException("Invalid characters in filename");
         }
+
         this.value = sanitize(value);
         this.extension = extractExtension(value);
+
+        // Проверка расширения
+        if (BLOCKED_EXTENSIONS.contains(this.extension)) {
+            throw new SecurityException(
+                    "File extension not allowed: ." + this.extension +
+                            ". Allowed: documents, images, archives, audio/video files"
+            );
+        }
     }
 
     public static FileName of(String value) {
@@ -63,4 +84,9 @@ public final class FileName implements Serializable {
 
     @Override
     public int hashCode() { return Objects.hash(value); }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }

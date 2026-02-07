@@ -1,0 +1,45 @@
+/* Upload Section */
+.upload-section {
+    background: var(--card);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+}
+
+.upload-area {
+    border: 2px dashed var(--border);
+    border-radius: 0.75rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.upload-area:hover {
+    border-color: var(--primary);
+    background: #f5f3ff;
+}
+
+.upload-area.dragover {
+    border-color: var(--primary);
+    background: #ede9fe;
+    transform: scale(1.02);
+}
+
+.upload-placeholder .icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.upload-placeholder p {
+    font-size: 1.125rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+
+.upload-placeholder .hint {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}

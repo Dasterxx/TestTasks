@@ -1,0 +1,15 @@
+/* Responsive */
+@media (max-width: 640px) {
+    header h1 {
+        font-size: 1.875rem;
+    }
+
+    .link-input-group,
+    .download-input-group {
+        flex-direction: column;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}

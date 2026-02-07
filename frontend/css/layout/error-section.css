@@ -1,0 +1,20 @@
+/* Error Section */
+.error-container {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.error-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.error-container h3 {
+    color: var(--error);
+    margin-bottom: 0.5rem;
+}
+
+.error-container p {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}

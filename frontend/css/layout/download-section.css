@@ -1,0 +1,17 @@
+/* Download Section */
+.download-section {
+    background: var(--card);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.download-section h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+}
+
+.download-input-group {
+    display: flex;
+    gap: 0.5rem;
+}

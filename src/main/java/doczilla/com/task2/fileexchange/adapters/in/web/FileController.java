@@ -212,11 +212,17 @@ public class FileController implements HttpHandler {
 
         int code = switch (e) {
             case IllegalArgumentException iae -> 400;
-            case SecurityException se -> 401;
+            case SecurityException se -> 403;  // Добавляем обработку SecurityException
             case FileNotFoundEx fnf -> 404;
             default -> 500;
         };
-        sendError(exchange, code, e.getMessage());
+
+        String message = e.getMessage();
+        if (message != null && message.startsWith("UPLOAD_REJECTED: ")) {
+            message = message.substring("UPLOAD_REJECTED: ".length());
+        }
+
+        sendError(exchange, code, message);
     }
 
     private void handleCleanup(HttpExchange exchange) throws IOException {

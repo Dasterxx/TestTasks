@@ -33,24 +33,23 @@ public final class UploadFileService implements UploadFileUseCase {
 
     @Override
     public FileId upload(UploadFileCommand command) {
-        // 1. Создаем доменный объект (валидация здесь!)
-        File file = File.create(
-                FileName.of(command.fileName()),
-                ContentType.of(command.contentType()),
-                command.size(),
-                command.uploadedBy()
-        );
+        try {
+            FileName fileName = FileName.of(command.fileName());
 
-        // 2. Сохраняем бинарные данные
-        String storageId = storagePort.store(file.getId(), command.content());
+            ContentType contentType = ContentType.of(command.contentType());
 
-        // 3. Сохраняем метаданные
-        FileId id = indexPort.save(file);
+            File file = File.create(fileName, contentType, command.size(), command.uploadedBy());
 
-        // 4. Публикация событий (side effects)
-        notifierPort.notifyFileUploaded(file);
-        auditLogPort.log("UPLOAD", file.getId(), command.uploadedBy());
+            String storageId = storagePort.store(file.getId(), command.content());
 
-        return id;
+            FileId id = indexPort.save(file);
+
+            notifierPort.notifyFileUploaded(file);
+            auditLogPort.log("UPLOAD", file.getId(), command.uploadedBy());
+
+            return id;
+        } catch (SecurityException e) {
+            throw new SecurityException("UPLOAD_REJECTED: " + e.getMessage());
+        }
     }
 }

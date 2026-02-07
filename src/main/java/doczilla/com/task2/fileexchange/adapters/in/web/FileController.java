@@ -2,6 +2,7 @@ package doczilla.com.task2.fileexchange.adapters.in.web;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import doczilla.com.task2.fileexchange.application.ports.in.CleanupExpiredFilesUseCase;
 import doczilla.com.task2.fileexchange.application.ports.in.DownloadFileUseCase;
 import doczilla.com.task2.fileexchange.application.ports.in.GetStatisticsUseCase;
 import doczilla.com.task2.fileexchange.application.ports.in.LoginUseCase;
@@ -26,17 +27,19 @@ public class FileController implements HttpHandler {
     private final LoginUseCase loginUseCase;
     private final AuthExtractor authExtractor;
     private final MultipartParser multipartParser;
+    private final CleanupExpiredFilesUseCase cleanupUseCase;
 
     public FileController(
             UploadFileUseCase uploadUseCase,
             DownloadFileUseCase downloadUseCase,
             GetStatisticsUseCase statisticsUseCase,
-            LoginUseCase loginUseCase
+            LoginUseCase loginUseCase, CleanupExpiredFilesUseCase cleanupUseCase
     ) {
         this.uploadUseCase = uploadUseCase;
         this.downloadUseCase = downloadUseCase;
         this.statisticsUseCase = statisticsUseCase;
         this.loginUseCase = loginUseCase;
+        this.cleanupUseCase = cleanupUseCase;
         this.authExtractor = new AuthExtractor();
         this.multipartParser = new MultipartParser();
     }
@@ -70,6 +73,8 @@ public class FileController implements HttpHandler {
                 handleLogin(exchange);
             } else if ("GET".equals(method) && "/me".equals(path)) {
                 handleMe(exchange);
+            }else if ("POST".equals(method) && "/admin/cleanup".equals(path)) {
+                handleCleanup(exchange);
             } else {
                 System.out.println("No route found for: " + method + " " + path);
                 sendError(exchange, 404, "Not found");
@@ -212,5 +217,17 @@ public class FileController implements HttpHandler {
             default -> 500;
         };
         sendError(exchange, code, e.getMessage());
+    }
+
+    private void handleCleanup(HttpExchange exchange) throws IOException {
+        // Можно добавить проверку админа, но для простоты - открыто
+        CleanupExpiredFilesUseCase.CleanupResult result = cleanupUseCase.cleanup();
+
+        String json = String.format(
+                "{\"deletedCount\":%d,\"freedBytes\":%d}",
+                result.deletedCount(),
+                result.freedBytes()
+        );
+        sendJson(exchange, 200, json);
     }
 }

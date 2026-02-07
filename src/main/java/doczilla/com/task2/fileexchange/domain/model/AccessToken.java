@@ -1,12 +1,16 @@
 package doczilla.com.task2.fileexchange.domain.model;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
 /**
  * Value Object для токена доступа.
  */
-public final class AccessToken {
+public final class AccessToken implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final String value;
 
     private AccessToken(String value) {

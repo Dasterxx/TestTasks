@@ -1,9 +1,14 @@
 package doczilla.com.task2.fileexchange.domain.model;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
-public final class File {
+public final class File implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private final FileId id;
     private final FileName name;
     private final ContentType contentType;

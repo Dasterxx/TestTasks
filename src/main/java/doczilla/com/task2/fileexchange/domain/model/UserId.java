@@ -1,9 +1,13 @@
 package doczilla.com.task2.fileexchange.domain.model;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-public final class UserId {
+public final class UserId implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final UUID value;
 
     private UserId(UUID value) {

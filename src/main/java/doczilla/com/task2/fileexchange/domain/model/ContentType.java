@@ -1,12 +1,16 @@
 package doczilla.com.task2.fileexchange.domain.model;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public final class ContentType {
+public final class ContentType implements Serializable {
     private static final Pattern VALID_PATTERN =
             Pattern.compile("^[a-zA-Z][a-zA-Z0-9-]+/[a-zA-Z0-9.+-]+$");
 
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final String value;
 
     private ContentType(String value) {

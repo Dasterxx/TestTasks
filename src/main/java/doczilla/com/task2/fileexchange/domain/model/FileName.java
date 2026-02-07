@@ -1,12 +1,16 @@
 package doczilla.com.task2.fileexchange.domain.model;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public final class FileName {
+public final class FileName implements Serializable {
     private static final Pattern INVALID_CHARS = Pattern.compile("[\\\\/:*?\"<>|]");
     private static final int MAX_LENGTH = 255;
 
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final String value;
     private final String extension;
 

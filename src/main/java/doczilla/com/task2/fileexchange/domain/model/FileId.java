@@ -1,10 +1,14 @@
 package doczilla.com.task2.fileexchange.domain.model;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Objects;
 
-public final class FileId {
+public final class FileId implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final String value;
 
     private FileId(String value) {

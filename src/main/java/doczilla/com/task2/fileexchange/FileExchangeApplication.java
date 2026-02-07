@@ -6,12 +6,10 @@ import doczilla.com.task2.fileexchange.adapters.in.web.StaticFileServer;
 public class FileExchangeApplication {
 
     public static void main(String[] args) throws Exception {
-        // Backend
         ApplicationConfig config = new ApplicationConfig();
         var app = config.compose();
         app.start();
 
-        // Frontend (опционально)
         new StaticFileServer("frontend", 3000).start();
 
         System.out.println("\n=================================");

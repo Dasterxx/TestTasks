@@ -7,9 +7,6 @@ import doczilla.com.task2.fileexchange.domain.model.UserId;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 
-/**
- * Реализация AuditLogPort - вывод в консоль/stdout.
- */
 public class ConsoleAuditLogAdapter implements AuditLogPort {
 
     private static final DateTimeFormatter FORMATTER =

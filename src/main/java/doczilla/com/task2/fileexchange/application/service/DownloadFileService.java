@@ -22,8 +22,6 @@ public final class DownloadFileService implements DownloadFileUseCase {
         this.storagePort = Objects.requireNonNull(storagePort);
     }
 
-    // application/service/DownloadFileService.java
-
     @Override
     public Optional<FileResult> download(FileId fileId, UserId requestedBy) {
         System.out.println("=== DEBUG ===");

@@ -19,7 +19,6 @@ public class AuthExtractor {
 
         String tokenValue = header.substring(7).trim();
 
-        // Если токен просто UUID (как в нашей заглушке), парсим как UUID
         try {
             return Optional.of(UserId.of(tokenValue));
         } catch (IllegalArgumentException e) {

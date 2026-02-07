@@ -3,9 +3,6 @@ package doczilla.com.task2.fileexchange.adapters.out.notification;
 import doczilla.com.task2.fileexchange.application.ports.out.FileNotifierPort;
 import doczilla.com.task2.fileexchange.domain.model.File;
 
-/**
- * Реализация FileNotifierPort - вывод в консоль.
- */
 public class ConsoleNotifierAdapter implements FileNotifierPort {
 
     @Override
